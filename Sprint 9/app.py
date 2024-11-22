@@ -3,15 +3,11 @@ import pickle
 import pandas as pd
 
 # Cargar el modelo y el escalador
-def load_model_and_scaler():
-    """Carga el modelo y el escalador desde archivos pickle."""
     with open('LogisticRegression.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     with open('scaler.pkl', 'rb') as scaler_file:
         scaler = pickle.load(scaler_file)
     return model, scaler
-
-model, scaler = load_model_and_scaler()
 
 # Título de la aplicación
 st.title("Predicción de Suscripción a Depósitos a Plazo")
