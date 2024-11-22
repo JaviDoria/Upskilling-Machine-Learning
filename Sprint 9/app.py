@@ -2,80 +2,104 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# Función para cargar el modelo y el escalador
-@st.cache_resource  # Usamos cache para evitar recargas
-def load_model_and_scaler():
-    with open('LogisticRegression.pkl', 'rb') as model_file:
-        model = pickle.load(model_file)
-    with open('scaler.pkl', 'rb') as scaler_file:
-        scaler = pickle.load(scaler_file)
-    return model, scaler
+# Cargar el modelo y el escalador desde archivos
+with open('forest_model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
 
-# Cargar el modelo y el escalador
-model, scaler = load_model_and_scaler()
+with open('scaler.pkl', 'rb') as scaler_file:
+    scaler = pickle.load(scaler_file)
+
 
 # Título de la aplicación
-st.title("Predicción de Suscripción a Depósitos a Plazo")
+st.title('Predicción de Suscripción a Depósito a Plazo')
 
-# Entrada de datos del usuario
-st.header("Introduce los datos del cliente:")
+# Entrada de datos demográficos del usuario
+st.header('Datos Demográficos')
 
-age = st.number_input("Edad:", min_value=16, max_value=125, value=30)
-education = st.radio("Nivel educativo:", ['primaria', 'secundaria', 'terciaria'])
-default = st.radio("Tiene crédito en mora:", ['no', 'sí'])
-balance = st.number_input("Saldo de la cuenta (en euros):", value=0)
-housing = st.radio("¿Tiene hipoteca?", ['no', 'sí'])
-loan = st.radio("¿Tiene un préstamo personal?", ['no', 'sí'])
-pdays = st.number_input("Días desde el último contacto con la campaña (pdays):", value=-1)
+age = st.number_input('Edad:', min_value=16, max_value=125)
 
-job = st.selectbox("Tipo de trabajo:", 
-                   ['office', 'other', 'self-employed', 'service', 'student', 
-                    'unemployed', 'nan'])
-marital = st.radio("Estado civil:", ['married', 'single'])
+job = st.selectbox('Trabajo:', 
+                   ('management', 'blue-collar', 'technician', 'admin.', 
+                    'services', 'housemaid', 'self-employed', 'entrepreneur',
+                    'unemployed', 'retired', 'student'))
 
-# Crear DataFrame con los datos del usuario
+marital = st.radio('Estado Civil:', ['soltero', 'casado', 'divorciado'])
+
+education = st.radio('Nivel Educativo:', ['primaria', 'secundaria', 'terciaria'])
+
+# Entrada de datos financieros del usuario
+st.header('Datos Financieros')
+
+balance = st.number_input('Saldo:')
+
+default = st.radio('Incumplimiento de Crédito:', ['no', 'sí'])
+
+housing = st.radio('Préstamo Hipotecario:', ['no', 'sí'])
+
+loan = st.radio('Préstamo Personal:', ['no', 'sí'])
+
+# Crear un DataFrame con las entradas
 user_data = pd.DataFrame({
     'age': [age],
+    'job': [job],
+    'marital': [marital], 
     'education': [education],
     'default': [default],
     'balance': [balance],
     'housing': [housing],
-    'loan': [loan],
-    'pdays': [pdays],
-    'job': [job],
-    'marital': [marital]
+    'loan': [loan]
 })
 
-# Procesar los datos
+# Codificación de las características 'default', 'housing', 'loan' y 'education'
 user_data['default'] = user_data['default'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['housing'] = user_data['housing'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['loan'] = user_data['loan'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria': 2, 'terciaria': 3}).astype(int)
 
-# Codificar variables categóricas
-user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
+# Mapeo del trabajo (One-Hot Encoding)
+grouped_jobs = {'management': 'office',
+                'admin.': 'office',
+                'blue-collar': 'blue-collar',
+                'technician': 'blue-collar',
+                'services': 'service',
+                'housemaid': 'service',
+                'self-employed': 'self-employed',
+                'entrepreneur': 'self-employed',
+                'unemployed': 'unemployed',
+                'student': 'student',
+                'unknown': 'other'}
 
-# Asegurar que las columnas necesarias están presentes
+user_data['job'] = user_data['job'].map(grouped_jobs)
+
+# Codificación One-Hot de las características 'job' y 'marital'
+user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
+user_encoded_data = user_encoded_data.astype(int)  # Convertir True/False a 1/0
+
+# Asegurar que las columnas estén en el orden correcto
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
     'job_office', 'job_other', 'job_self-employed', 'job_service', 'job_student',
     'job_unemployed', 'job_nan', 'marital_married', 'marital_single'
 ]
+
+# Agregar columnas faltantes con valor 0
 for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
+
+# Reordenar las columnas para coincidir con las del modelo
 user_encoded_data = user_encoded_data[required_columns]
 
-# Estandarizar las columnas necesarias
-scale_variables = ['age', 'balance', 'pdays']
-user_encoded_data[scale_variables] = scaler.transform(user_encoded_data[scale_variables])
+# Estandarizar las entradas de edad y saldo
+scale_variable = ['age', 'balance']
+user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
 
-# Mostrar el resultado
-st.header("Resultado de la Predicción:")
-if prediction[0] == 1:
-    st.success("El cliente probablemente SE SUSCRIBIRÁ a un depósito a plazo.")
+# Mostrar la predicción
+st.header('Resultado de la Predicción')
+if prediction == 1: 
+    st.success('El cliente probablemente SE SUSCRIBIRÁ a un depósito a plazo.')
 else:
-    st.error("El cliente probablemente NO SE SUSCRIBIRÁ a un depósito a plazo.")
+    st.error('El cliente probablemente NO SE SUSCRIBIRÁ a un depósito a plazo.')
