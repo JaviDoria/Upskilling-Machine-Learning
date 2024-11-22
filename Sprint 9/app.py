@@ -2,12 +2,17 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# Cargar el modelo y el escalador
+# Función para cargar el modelo y el escalador
+@st.cache_resource  # Usamos cache para evitar recargas
+def load_model_and_scaler():
     with open('LogisticRegression.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     with open('scaler.pkl', 'rb') as scaler_file:
         scaler = pickle.load(scaler_file)
     return model, scaler
+
+# Cargar el modelo y el escalador
+model, scaler = load_model_and_scaler()
 
 # Título de la aplicación
 st.title("Predicción de Suscripción a Depósitos a Plazo")
