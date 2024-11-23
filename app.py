@@ -76,12 +76,12 @@ user_encoded_data = user_encoded_data.astype(int)  # Convertir True/False a 1/0
 
 # Asegurar que las columnas estén en el orden correcto
 required_columns = [
-    'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
+    'age', 'education', 'default', 'balance', 'housing', 'loan',
     'job_office', 'job_other', 'job_self-employed', 'job_service', 'job_student',
     'job_unemployed', 'job_nan', 'marital_married', 'marital_single'
 ]
 
-# Agregar columnas faltantes con valor 0
+# Agregar columnas faltantes con valor 0 si es necesario
 for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
@@ -90,8 +90,8 @@ for col in required_columns:
 user_encoded_data = user_encoded_data[required_columns]
 
 # Estandarizar las entradas de edad y saldo
-scale_variable = ['age', 'balance']
-user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
+scale_variables = ['age', 'balance']
+user_encoded_data[scale_variables] = scaler.transform(user_encoded_data[scale_variables])
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
