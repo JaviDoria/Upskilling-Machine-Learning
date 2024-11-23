@@ -98,7 +98,7 @@ prediction = model.predict(user_encoded_data)
 
 # Mostrar la predicción
 st.header('Resultado de la Predicción')
-if prediction[0] == 1:  # Acceder al primer valor de la predicción
+if prediction == 1: 
     st.success('El cliente probablemente SE SUSCRIBIRÁ a un depósito a plazo.')
 else:
     st.error('El cliente probablemente NO SE SUSCRIBIRÁ a un depósito a plazo.')
