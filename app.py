@@ -50,7 +50,6 @@ user_data = pd.DataFrame({
 })
 
 # Codificación de las características 'default', 'housing', 'loan' y 'education'
-user_data['default'] = user_data['default'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['housing'] = user_data['housing'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['loan'] = user_data['loan'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria': 2, 'terciaria': 3}).astype(int)
