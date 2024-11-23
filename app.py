@@ -22,7 +22,7 @@ job = st.selectbox('Trabajo:',
                     'services', 'housemaid', 'self-employed', 'entrepreneur',
                     'unemployed', 'retired', 'student', 'unknown'))
 
-marital = st.radio('Estado Civil:', ['soltero', 'casado', 'divorciado'])
+marital = st.radio('Estado Civil:', ['casado','soltero'])
 
 education = st.radio('Nivel Educativo:', ['primaria', 'secundaria', 'terciaria'])
 
@@ -31,11 +31,12 @@ st.header('Datos Financieros')
 
 balance = st.number_input('Saldo:')
 
-default = st.radio('Incumplimiento de Crédito:', ['no', 'sí'])
-
 housing = st.radio('Préstamo Hipotecario:', ['no', 'sí'])
 
 loan = st.radio('Préstamo Personal:', ['no', 'sí'])
+
+pdays = st.number_input('Días desde el último contacto:')
+
 
 # Crear un DataFrame con las entradas
 user_data = pd.DataFrame({
@@ -76,10 +77,10 @@ user_encoded_data = user_encoded_data.astype(int) # Para transformar el resultad
 
 # Asegurar que todas las columnas requeridas están presentes
 required_columns = [
-    'age', 'education', 'default', 'balance', 'housing', 'loan',
-    'job_office', 'job_blue-collar', 'job_self-employed', 'job_service', 
+    'age', 'education', 'balance', 'housing', 'loan', 'pdays',
+    'job_office', 'job_other', 'job_self-employed', 'job_service', 
     'job_student', 'job_unemployed', 'job_nan', 'marital_married', 
-    'marital_single', 'marital_divorced'  
+    'marital_single' 
 ]
 
 
