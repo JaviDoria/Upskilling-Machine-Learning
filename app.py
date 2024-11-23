@@ -20,7 +20,7 @@ age = st.number_input('Edad:', min_value=16, max_value=125)
 job = st.selectbox('Trabajo:', 
                    ('management', 'blue-collar', 'technician', 'admin.', 
                     'services', 'housemaid', 'self-employed', 'entrepreneur',
-                    'unemployed', 'retired', 'student'))
+                    'unemployed', 'retired', 'student', 'unknown'))
 
 marital = st.radio('Estado Civil:', ['soltero', 'casado', 'divorciado'])
 
@@ -55,7 +55,7 @@ user_data['housing'] = user_data['housing'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['loan'] = user_data['loan'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria': 2, 'terciaria': 3}).astype(int)
 
-# Mapeo del trabajo (One-Hot Encoding)
+# Mapeo del 'job' (One-Hot Encoding)
 grouped_jobs = {'management': 'office',
                 'admin.': 'office',
                 'blue-collar': 'blue-collar',
@@ -72,6 +72,7 @@ user_data['job'] = user_data['job'].map(grouped_jobs)
 
 # Codificación One-Hot de las características 'job' y 'marital'
 user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
+user_encoded_data = user_encoded_data.astype(int) # Para transformar el resultado del dummies False/True a binario 0/1
 
 # Asegurar que todas las columnas requeridas están presentes
 required_columns = [
