@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 
 # Cargar el modelo y el escalador desde archivos
-with open('logistic_regression.pkl', 'rb') as model_file:
+with open('LogisticRegression.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 with open('scaler.pkl', 'rb') as scaler_file:
