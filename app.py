@@ -9,7 +9,6 @@ with open('LogisticRegression.pkl', 'rb') as model_file:
 with open('scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
-
 # Título de la aplicación
 st.title('Predicción de Suscripción a Depósito a Plazo')
 
@@ -44,8 +43,8 @@ user_data = pd.DataFrame({
     'job': [job],
     'marital': [marital], 
     'education': [education],
-    'default': [default],
     'balance': [balance],
+    'default': [default],
     'housing': [housing],
     'loan': [loan]
 })
@@ -99,7 +98,7 @@ prediction = model.predict(user_encoded_data)
 
 # Mostrar la predicción
 st.header('Resultado de la Predicción')
-if prediction == 1: 
+if prediction[0] == 1:  # Acceder al primer valor de la predicción
     st.success('El cliente probablemente SE SUSCRIBIRÁ a un depósito a plazo.')
 else:
     st.error('El cliente probablemente NO SE SUSCRIBIRÁ a un depósito a plazo.')
