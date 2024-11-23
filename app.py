@@ -13,7 +13,7 @@ with open('scaler.pkl', 'rb') as scaler_file:
 st.title('Predicción de Suscripción a Depósito a Plazo')
 
 # Entrada de datos demográficos del usuario
-st.header('Datos Demográficos')
+st.header('Información Personal')
 
 age = st.number_input('Edad:', min_value=16, max_value=125)
 
