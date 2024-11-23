@@ -45,7 +45,6 @@ user_data = pd.DataFrame({
     'marital': [marital], 
     'education': [education],
     'balance': [balance],
-    'default': [default],
     'housing': [housing],
     'loan': [loan]
 })
