@@ -77,9 +77,11 @@ user_encoded_data = user_encoded_data.astype(int) # Para transformar el resultad
 # Asegurar que todas las columnas requeridas están presentes
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan',
-    'job_office', 'job_other', 'job_self-employed', 'job_service', 'job_student',
-    'job_unemployed', 'job_nan', 'marital_married', 'marital_single'
+    'job_office', 'job_blue-collar', 'job_self-employed', 'job_service', 
+    'job_student', 'job_unemployed', 'job_nan', 'marital_married', 
+    'marital_single', 'marital_divorced'  
 ]
+
 
 # Agregar columnas faltantes con valor 0
 for col in required_columns:
