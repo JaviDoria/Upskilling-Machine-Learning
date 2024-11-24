@@ -31,7 +31,7 @@ st.header('Datos Financieros')
 
 balance = st.number_input('Saldo:')
 
-default = st.radio('Incumplimiento de Crédito (default):', ['no', 'sí'])
+default = st.radio('Incumplimiento de Crédito:', ['no', 'sí'])
 
 housing = st.radio('Préstamo Hipotecario:', ['no', 'sí'])
 
@@ -91,19 +91,12 @@ for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
 
-# Asegurarse de que las columnas sean las correctas para el escalador
-expected_columns = list(scaler.feature_names_in_)
+# Ordenar las columnas
+user_encoded_data = user_encoded_data[required_columns]
 
-# Crear cualquier columna faltante con valor 0
-for col in expected_columns:
-    if col not in user_encoded_data.columns:
-        user_encoded_data[col] = 0
-
-# Eliminar cualquier columna no esperada
-user_encoded_data = user_encoded_data[expected_columns]
-
-# Aplicar el escalador
-user_encoded_data[expected_columns] = scaler.transform(user_encoded_data[expected_columns])
+# Estandarizar las entradas de edad y saldo
+scale_variable = ['age', 'balance']
+user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
