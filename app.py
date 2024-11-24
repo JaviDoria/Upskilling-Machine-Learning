@@ -75,7 +75,7 @@ user_encoded_data = user_encoded_data.astype(int) # Para transformar el resultad
 
 # Asegurar que todas las columnas requeridas están presentes
 required_columns = [
-    'age', 'education', 'balance', 'housing', 'loan', 'pdays',
+    'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
     'job_office', 'job_other', 'job_self-employed', 'job_service', 
     'job_student', 'job_unemployed', 'job_nan', 'marital_married', 
     'marital_single' 
