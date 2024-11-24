@@ -95,7 +95,7 @@ for col in required_columns:
 
 
 # Realizar la predicción
-prediction = model.predict(required_columns)
+prediction = model.predict(user_encoded_data)
 
 # Mostrar la predicción
 st.header('Resultado de la Predicción')
