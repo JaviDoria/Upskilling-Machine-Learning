@@ -31,6 +31,8 @@ st.header('Datos Financieros')
 
 balance = st.number_input('Saldo:')
 
+default = st.radio('Incumplimiento de Crédito (default):', ['no', 'sí'])
+
 housing = st.radio('Préstamo Hipotecario:', ['no', 'sí'])
 
 loan = st.radio('Préstamo Personal:', ['no', 'sí'])
@@ -46,7 +48,8 @@ user_data = pd.DataFrame({
     'education': [education],
     'balance': [balance],
     'housing': [housing],
-    'loan': [loan]
+    'loan': [loan],
+    'default': [default]
 })
 
 # Codificación de las características 'default', 'housing', 'loan' y 'education'
