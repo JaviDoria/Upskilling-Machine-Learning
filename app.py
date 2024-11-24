@@ -91,7 +91,7 @@ for col in required_columns:
         user_encoded_data[col] = 0
 
 # Asegurarse de que las columnas estén en el orden correcto
-user_encoded_data = user_encoded_data[model_columns]
+user_encoded_data = user_encoded_data[required_columns]
 
 ''' # Verificar que las columnas 'age' y 'balance' estén presentes en el DataFrame antes de la estandarización
 if 'age' not in user_encoded_data.columns or 'balance' not in user_encoded_data.columns:
