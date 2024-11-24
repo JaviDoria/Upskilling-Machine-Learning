@@ -94,9 +94,13 @@ for col in required_columns:
 # Ordenar las columnas
 user_encoded_data = user_encoded_data[required_columns]
 
-# Estandarizar las entradas de edad y saldo
-scale_variable = ['age', 'balance']
-user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
+# Verificar que las columnas 'age' y 'balance' estén presentes en el DataFrame antes de la estandarización
+if 'age' not in user_encoded_data.columns or 'balance' not in user_encoded_data.columns:
+    st.error("Las columnas 'age' y 'balance' deben estar presentes para la estandarización.")
+else:
+    # Estandarizar las entradas de edad y saldo usando el escalador cargado
+    scale_variable = ['age', 'balance']
+    user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
