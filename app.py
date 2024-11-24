@@ -39,7 +39,6 @@ loan = st.radio('Préstamo Personal:', ['no', 'sí'])
 
 pdays = st.number_input('Días desde el último contacto:')
 
-
 # Crear un DataFrame con las entradas
 user_data = pd.DataFrame({
     'age': [age],
@@ -57,9 +56,11 @@ user_data = pd.DataFrame({
 user_data['default'] = user_data['default'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['housing'] = user_data['housing'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['loan'] = user_data['loan'].map({'no': 0, 'sí': 1}).astype(int)
+
+# Codificación de la variable 'education' con Label Encoding
 user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria': 2, 'terciaria': 3}).astype(int)
 
-# Mapeo del 'job' (One-Hot Encoding)
+# Mapeo del 'job' (Agrupando en categorías)
 grouped_jobs = {'management': 'office',
                 'admin.': 'office',
                 'blue-collar': 'blue-collar',
