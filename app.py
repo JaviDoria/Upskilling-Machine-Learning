@@ -93,8 +93,20 @@ for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
 
-# Reordenar las columnas para coincidir con las del modelo
-user_encoded_data = user_encoded_data[required_columns]
+# Obtener las columnas esperadas por el escalador
+scale_variables = scaler.feature_names_in_
+
+# Completar columnas faltantes con valor 0
+for col in scale_variables:
+    if col not in user_encoded_data.columns:
+        user_encoded_data[col] = 0
+
+# Reordenar las columnas para coincidir con las esperadas
+user_encoded_data = user_encoded_data[scale_variables]
+
+# Aplicar el escalador
+user_encoded_data[scale_variables] = scaler.transform(user_encoded_data[scale_variables])
+
 
 # Estandarizar las entradas de edad y saldo
 scale_variables = ['age', 'balance']
