@@ -9,6 +9,11 @@ with open('LogisticRegression.pkl', 'rb') as model_file:
 with open('scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
+# Las columnas que usaste para entrenar el modelo (asegúrate de que estén correctas)
+model_columns = ['age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays', 'job_office', 
+                 'job_service', 'job_self-employed', 'job_unemployed', 'job_student', 'job_other', 
+                 'marital_casado', 'marital_soltero']
+
 # Título de la aplicación
 st.title('Predicción de Suscripción a Depósito a Plazo')
 
@@ -78,15 +83,8 @@ user_data['job'] = user_data['job'].map(grouped_jobs)
 user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
 user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
-# Verificar las columnas que el modelo y el escalador esperan
-model_columns = model.feature_names_in_  # Las columnas que el modelo espera
-scaler_columns = scaler.feature_names_in_  # Las columnas que el escalador espera
-
-st.write("Columnas del modelo:", model_columns)
-st.write("Columnas del escalador:", scaler_columns)
-
-# Asegurar que las columnas necesarias estén presentes
-required_columns = set(model_columns)  # O usar scaler_columns si prefieres las columnas del escalador
+# Asegurarse de que las columnas necesarias estén presentes
+required_columns = set(model_columns)  # Las columnas del modelo que ya conocemos
 
 # Agregar columnas faltantes con valor 0
 for col in required_columns:
