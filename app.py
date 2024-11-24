@@ -82,9 +82,6 @@ user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resulta
 # model_columns = model.feature_names_in_  # Las columnas que el modelo espera
 # scaler_columns = scaler.feature_names_in_  # Las columnas que el escalador espera
 
-st.write("Columnas del modelo:", model_columns)
-st.write("Columnas del escalador:", scaler_columns)
-
 # Asegurar que las columnas necesarias estén presentes
 required_columns = set(model_columns)  # O usar scaler_columns si prefieres las columnas del escalador
 
