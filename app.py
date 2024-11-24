@@ -39,7 +39,6 @@ loan = st.radio('Préstamo Personal:', ['no', 'sí'])
 
 pdays = st.number_input('Días desde el último contacto:')
 
-
 # Crear un DataFrame con las entradas
 user_data = pd.DataFrame({
     'age': [age],
@@ -90,9 +89,8 @@ for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
 
-# Asegurarse de que las columnas estén en el orden correcto
-# user_encoded_data = user_encoded_data[required_columns]
-
+# Asegurarse de que 'user_encoded_data' sea 2D (es decir, (1, n_features))
+user_encoded_data = user_encoded_data.values.reshape(1, -1)
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
