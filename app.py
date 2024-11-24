@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 import pickle
 import pandas as pd
 
@@ -75,26 +75,24 @@ grouped_jobs = {'management': 'office',
 user_data['job'] = user_data['job'].map(grouped_jobs)
 
 # Codificación One-Hot de las características 'job' y 'marital'
-user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'], drop_first=True)
+user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
 user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
 # Asegurar que todas las columnas requeridas estén presentes
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
     'job_office', 'job_other', 'job_self-employed', 'job_service', 
-    'job_student', 'job_unemployed', 'marital_married', 'marital_single'
+    'job_student', 'job_unemployed', 'job_nan', 'marital_married', 
+    'marital_single'
 ]
-
-# Agregar columnas faltantes con valor 0 y reordenar
+# Agregar columnas faltantes con valor 0
 for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
 
-user_encoded_data = user_encoded_data[required_columns]  # Reordenar las columnas
+# Asegurarse de que las columnas estén en el orden correcto
+# user_encoded_data = user_encoded_data[required_columns]
 
-# Escalar las variables numéricas si es necesario
-scale_variable = ['age', 'balance', 'pdays']
-user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
