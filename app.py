@@ -79,8 +79,8 @@ user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
 user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
 # Verificar las columnas que el modelo y el escalador esperan
-model_columns = model.feature_names_in_  # Las columnas que el modelo espera
-scaler_columns = scaler.feature_names_in_  # Las columnas que el escalador espera
+# model_columns = model.feature_names_in_  # Las columnas que el modelo espera
+# scaler_columns = scaler.feature_names_in_  # Las columnas que el escalador espera
 
 st.write("Columnas del modelo:", model_columns)
 st.write("Columnas del escalador:", scaler_columns)
