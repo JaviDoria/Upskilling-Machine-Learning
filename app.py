@@ -43,13 +43,15 @@ pdays = st.number_input('Días desde el último contacto:')
 # Crear un DataFrame con las entradas
 user_data = pd.DataFrame({
     'age': [age],
-    'job': [job],
-    'marital': [marital], 
     'education': [education],
+    'default': [default],
     'balance': [balance],
     'housing': [housing],
     'loan': [loan],
-    'default': [default]
+    'pdays': [pdays],
+    'job': [job],
+    'marital': [marital],
+
 })
 
 # Codificación de las características 'default', 'housing', 'loan' y 'education'
