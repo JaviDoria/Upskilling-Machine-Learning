@@ -102,7 +102,7 @@ else:
     user_encoded_data[scale_variable] = scaler.transform(user_encoded_data[scale_variable])
 '''
 # Realizar la predicción
-prediction = model.predict(user_encoded_data)
+prediction = model.predict(required_columns)
 
 # Mostrar la predicción
 st.header('Resultado de la Predicción')
