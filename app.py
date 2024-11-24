@@ -51,7 +51,6 @@ user_data = pd.DataFrame({
     'pdays': [pdays],
     'job': [job],
     'marital': [marital],
-
 })
 
 # Codificación de las características 'default', 'housing', 'loan' y 'education'
@@ -77,47 +76,41 @@ user_data['job'] = user_data['job'].map(grouped_jobs)
 
 # Codificación One-Hot de las características 'job' y 'marital'
 user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
-user_encoded_data = user_encoded_data.astype(int) # Para transformar el resultado del dummies False/True a binario 0/1
+user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
-# Asegurar que todas las columnas requeridas están presentes
+# Asegurar que todas las columnas requeridas estén presentes
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
     'job_office', 'job_other', 'job_self-employed', 'job_service', 
     'job_student', 'job_unemployed', 'job_nan', 'marital_married', 
-    'marital_single' 
+    'marital_single'
 ]
-
 
 # Agregar columnas faltantes con valor 0
 for col in required_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
 
-# Obtener las columnas esperadas por el escalador
-scale_variables = scaler.feature_names_in_
+# Asegurarse de que las columnas sean las correctas para el escalador
+expected_columns = list(scaler.feature_names_in_)
 
-# Completar columnas faltantes con valor 0
-for col in scale_variables:
+# Crear cualquier columna faltante con valor 0
+for col in expected_columns:
     if col not in user_encoded_data.columns:
         user_encoded_data[col] = 0
 
-# Reordenar las columnas para coincidir con las esperadas
-user_encoded_data = user_encoded_data[scale_variables]
+# Eliminar cualquier columna no esperada
+user_encoded_data = user_encoded_data[expected_columns]
 
 # Aplicar el escalador
-user_encoded_data[scale_variables] = scaler.transform(user_encoded_data[scale_variables])
-
-
-# Estandarizar las entradas de edad y saldo
-scale_variables = ['age', 'balance']
-user_encoded_data[scale_variables] = scaler.transform(user_encoded_data[scale_variables])
+user_encoded_data[expected_columns] = scaler.transform(user_encoded_data[expected_columns])
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
 
 # Mostrar la predicción
 st.header('Resultado de la Predicción')
-if prediction == 1: 
+if prediction == 1:
     st.success('El cliente probablemente SE SUSCRIBIRÁ a un depósito a plazo.')
 else:
     st.error('El cliente probablemente NO SE SUSCRIBIRÁ a un depósito a plazo.')
