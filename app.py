@@ -78,20 +78,13 @@ user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
 user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
 # Asegurar que todas las columnas requeridas estén presentes
-'''required_columns = [
+required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
     'job_office', 'job_other', 'job_self-employed', 'job_service', 
     'job_student', 'job_unemployed', 'marital_married', 
     'marital_single'
-] '''
+] 
 
-required_columns = [
-    'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
-    'job_management', 'job_blue-collar', 'job_technician', 'job_admin.', 
-    'job_services', 'job_housemaid', 'job_self-employed', 'job_entrepreneur',
-    'job_unemployed', 'job_retired', 'job_student', 'job_unknown', 
-    'marital_married', 'marital_single'
-]
 # Agregar columnas faltantes con valor 0
 for col in required_columns:
     if col not in user_encoded_data.columns:
