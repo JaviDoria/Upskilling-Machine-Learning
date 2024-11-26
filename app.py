@@ -91,7 +91,7 @@ for col in required_columns:
         user_encoded_data[col] = 0
 
 # Asegurarse de que 'user_encoded_data' sea 2D (es decir, (1, n_features))
-# user_encoded_data = user_encoded_data.values.reshape(1, -1)
+user_encoded_data = user_encoded_data.values.reshape(1, -1)
 
 # Realizar la predicción
 prediction = model.predict(user_encoded_data)
