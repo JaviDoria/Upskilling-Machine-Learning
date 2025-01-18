@@ -60,15 +60,16 @@ user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria'
 
 # Mapeo del 'job' (One-Hot Encoding)
 grouped_jobs = {'management': 'office',
-                'admin.': 'office',
                 'blue-collar': 'blue-collar',
                 'technician': 'blue-collar',
+                'admin.': 'office',
                 'services': 'service',
-                'housemaid': 'service',
+                'retired': 'unemployed',
                 'self-employed': 'self-employed',
-                'entrepreneur': 'self-employed',
-                'unemployed': 'unemployed',
                 'student': 'student',
+                'unemployed': 'unemployed',
+                'entrepreneur': 'self-employed',
+                'housemaid': 'service',
                 'unknown': 'other'}
 
 user_data['job'] = user_data['job'].map(grouped_jobs)
