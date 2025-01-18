@@ -61,7 +61,7 @@ user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria'
 # Mapeo del 'job' (corregido para no mapear 'technician' a 'blue-collar')
 grouped_jobs = {'management': 'office',
                 'blue-collar': 'blue-collar',
-                'technician': 'technician',  # Ahora "technician" se queda como está
+                'technician': 'technician',  
                 'admin.': 'office',
                 'services': 'service',
                 'retired': 'unemployed',
