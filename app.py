@@ -39,18 +39,6 @@ loan = st.radio('Préstamo Personal:', ['no', 'sí'])
 
 pdays = st.number_input('Días desde el último contacto:')
 
-'''# Crear un DataFrame con las entradas
-user_data = pd.DataFrame({
-    'age': [age],
-    'education': [education],
-    'default': [default],
-    'balance': [balance],
-    'housing': [housing],
-    'loan': [loan],
-    'pdays': [pdays],
-    'job': [job],
-    'marital': [marital],
-})'''
 
 # Codificación de las características 'default', 'housing', 'loan' y 'education'
 user_data['default'] = user_data['default'].map({'no': 0, 'sí': 1}).astype(int)
