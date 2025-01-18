@@ -58,10 +58,10 @@ user_data['housing'] = user_data['housing'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['loan'] = user_data['loan'].map({'no': 0, 'sí': 1}).astype(int)
 user_data['education'] = user_data['education'].map({'primaria': 1, 'secundaria': 2, 'terciaria': 3}).astype(int)
 
-# Mapeo del 'job' (One-Hot Encoding)
+# Mapeo del 'job' (corregido para no mapear 'technician' a 'blue-collar')
 grouped_jobs = {'management': 'office',
                 'blue-collar': 'blue-collar',
-                'technician': 'blue-collar',
+                'technician': 'technician',  # Ahora "technician" se queda como está
                 'admin.': 'office',
                 'services': 'service',
                 'retired': 'unemployed',
@@ -78,13 +78,16 @@ user_data['job'] = user_data['job'].map(grouped_jobs)
 user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
 user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
+# Verifica las columnas generadas después del One-Hot Encoding
+st.write(user_encoded_data.columns)  # Esto es útil para depurar y ver si todas las categorías están representadas
+
 # Asegurar que todas las columnas requeridas estén presentes
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
-    'job_blue-collar', 'job_office', 'job_other', 'job_self-employed', 'job_service', 
+    'job_blue-collar', 'job_office', 'job_technician', 'job_self-employed', 'job_service', 
     'job_student', 'job_unemployed', 'marital_divorced', 'marital_married', 
     'marital_single'
-] 
+]
 
 # Agregar columnas faltantes con valor 0
 for col in required_columns:
