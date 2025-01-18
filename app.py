@@ -80,8 +80,8 @@ user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resulta
 # Asegurar que todas las columnas requeridas estén presentes
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
-    'job_office', 'job_other', 'job_self-employed', 'job_service', 
-    'job_student', 'job_unemployed', 'marital_married', 
+    'job_blue-collar', 'job_office', 'job_other', 'job_self-employed', 'job_service', 
+    'job_student', 'job_unemployed', 'marital_divorced', 'marital_married', 
     'marital_single'
 ] 
 
