@@ -78,9 +78,6 @@ user_data['job'] = user_data['job'].map(grouped_jobs)
 user_encoded_data = pd.get_dummies(user_data, columns=['job', 'marital'])
 user_encoded_data = user_encoded_data.astype(int)  # Para transformar el resultado de dummies False/True a binario 0/1
 
-# Verifica las columnas generadas después del One-Hot Encoding
-st.write(user_encoded_data.columns)  # Esto es útil para depurar y ver si todas las categorías están representadas
-
 # Asegurar que todas las columnas requeridas estén presentes
 required_columns = [
     'age', 'education', 'default', 'balance', 'housing', 'loan', 'pdays',
